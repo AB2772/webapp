@@ -9,9 +9,6 @@
 		var userObject = {};
 		userObject.username = document.getElementById('userNameRegister').value;
 		userObject.password = document.getElementById('userPassRegister').value;
-
-		localStorage[userObject.username] = JSON.stringify(userObject);
-		localStorage.setItem("currentUser",JSON.stringify(userObject[i]));
 	}
 </script>
 <script>
@@ -21,9 +18,6 @@
 		var providerObject = {};
 		providerObject.provider = document.getElementById('providerNameRegister').value;
 		providerObject.password = document.getElementById('providerPassRegister').value;
-
-		localStorage[providerObject.provider] = JSON.stringify(providerObject);
-		localStorage.setItem("currentUser",JSON.stringify(providerObject[i]));
 	}
 </script>
 <script>

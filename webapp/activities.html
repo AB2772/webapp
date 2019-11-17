@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Vue references -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> <!-- Call Vue  -->
+		<!-- Vue devtools package/library fixes  -->
+		<script src="https://unpkg.com/vue@1.0.28/dist/vue.js"></script>
+		<script src="https://unpkg.com/vuex@1.0.1/dist/vuex.js"></script>
+		<link rel="stylesheet" href="styles.css"/>
+		<script>
+			localStorage.setItem("currentUser",JSON.stringify(username[i]));
+		</script>
+	<head>
+
+	<body>
+		<!-- parent div containing all to-do list div -->
+		<div id="activityList">
+			<!-- div to add a new task -->			
+			<div id="addNewTask">
+        		<!-- add task form -->        		
+		        <form v-on:submit.prevent=""> <!-- ' v-on:submit.prevent="" ' prevents the page from reloading once a new task is added -->
+			          <label class="inputlabel" for="new-task">Activity Details: </label> 
+			          <!-- 'label' for the input field -->		       
+			          <input id="new-task" v-model="newTask" placeholder="Add Activity" autofocus="" />
+			          <input id="new-location" v-model="newLocation" placeholder="Add Location" autofocus="" />
+			          <input id="new-price" v-model="newPrice" placeholder="Add Price" autofocus="" />			
+			    	  <a v-if="newTask != null">
+						<button class="addButton activeAB" v-on:click="addTask" title="Activity">Add Activity!</button>
+			          </a>
+			          <a v-else>  <!-- 'Else' deactivate 'Add Task' button if the placeholder is empty -->
+			          	 <button class="addButton" type="button" disabled="">Add Activity!</button>			          			          	 		       	 
+			          </a>
+		          	<hr/>
+		          	<h1 class="maintitle">Activities Available:</h1>			          		      
+		        </form>	        	
+		    </div>
+
+		    <!-- div to add the new 'task' to the 'tasks' array -->	
+		    	<!-- 'tasks' ordered list -->		        
+		        <ol>
+		          <li v-for="task in tasks" v-bind:key="task"> <!-- for each 'task' bind it to the 'tasks' array -->
+		            <p class="tasksAdded">
+		            	{{ task.taskName }}
+		            	<label>| {{ task.taskLocation }}</label>
+		            	<label>| &euro;{{ task.taskPrice }}</label> <!-- retrieve the task name from the "tasks" array & output it in a fresh line -->
+	            		<button class="removeButton activeRB" v-on:click="removeTask" title="Remove Task">Delete</button>  <!-- Delete button if user wants to remove/delete task | | removeTask calls corresponding method -->           	
+		            </p> 	
+		          </li>
+		        </ol>
+	    	</div>
+	    </div>	
+
+		<script>
+		  	new Vue ({
+			    el: '#activityList',
+			    data: function(){
+			      return {
+			        tasks: []
+			      };
+
+			    },
+			    methods: {
+			    	// "addTask" method			    	
+			     	addTask: function() {			     		
+				        this.tasks.push({ //push new elements into the "tasks" array
+				          //add next task
+				          id: this.nextId++, //increment automatically the task id number by 1
+				          taskName: this.newTask, //add the new to task to the list
+				          taskLocation: this.newLocation,
+				          taskPrice: this.newPrice
+				        });
+				        this.newTask = null; // placeholder value is nullified/cleared
+				        this.newLocation = null;
+				        this.newPrice = null;
+			      	},
+			     	removeTask: function(index) {			     		
+				          //add next task
+				        this.tasks.splice(index, 1); //'splice' is used to remove the respective "task" element from "tasks"
+				        this.taskName = "";
+				        this.taskLocation = "";
+				        this.taskPrice = "";					
+			      	}			      		      	
+			    }
+			});    
+		</script>
+	</body>
+</html>
