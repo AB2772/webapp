@@ -8,11 +8,28 @@
 		<script src="https://unpkg.com/vuex@1.0.1/dist/vuex.js"></script>
 		<link rel="stylesheet" href="styles.css"/>
 		<script>
-			localStorage.setItem("currentUser",JSON.stringify(username[i]));
+			function logout()
+			{
+				localStorage.removeItem('currentUser');
+				window.location.href="index.html";
+			}
+		</script>
+		<script>
+			function storeActivity()
+			{
+				var activityObject = {};
+				activityObject.activity = document.getElementById('new-task').value;
+				activityObject.location = document.getElementById('new-location').value;
+				activityObject.price = document.getElementById('new-price').value;
+			}
 		</script>
 	<head>
 
 	<body>
+		Welcome, <span id="welcomeName"></span>
+	<script>
+		document.getElementById("welcomeName").innerHTML=localStorage.getItem("currentUser");
+	</script>
 		<!-- parent div containing all to-do list div -->
 		<div id="activityList">
 			<!-- div to add a new task -->			
@@ -21,11 +38,11 @@
 		        <form v-on:submit.prevent=""> <!-- ' v-on:submit.prevent="" ' prevents the page from reloading once a new task is added -->
 			          <label class="inputlabel" for="new-task">Activity Details: </label> 
 			          <!-- 'label' for the input field -->		       
-			          <input id="new-task" v-model="newTask" placeholder="Add Activity" autofocus="" />
-			          <input id="new-location" v-model="newLocation" placeholder="Add Location" autofocus="" />
-			          <input id="new-price" v-model="newPrice" placeholder="Add Price" autofocus="" />			
+			          <input type="text" id="new-task" v-model="newTask" placeholder="Add Activity" autofocus="" />
+			          <input type="text" id="new-location" v-model="newLocation" placeholder="Add Location" autofocus="" />
+			          <input type="text" id="new-price" v-model="newPrice" placeholder="Add Price" autofocus="" />			
 			    	  <a v-if="newTask != null">
-						<button class="addButton activeAB" v-on:click="addTask" title="Activity">Add Activity!</button>
+						<button class="addButton activeAB" v-on:click="addTask" title="Activity" onclick="storeActivity()" type="reset">Add Activity!</button>
 			          </a>
 			          <a v-else>  <!-- 'Else' deactivate 'Add Task' button if the placeholder is empty -->
 			          	 <button class="addButton" type="button" disabled="">Add Activity!</button>			          			          	 		       	 
@@ -34,6 +51,7 @@
 		          	<h1 class="maintitle">Activities Available:</h1>			          		      
 		        </form>	        	
 		    </div>
+		    <button type="button" onclick="logout();">Logout</button>
 
 		    <!-- div to add the new 'task' to the 'tasks' array -->	
 		    	<!-- 'tasks' ordered list -->		        
@@ -79,6 +97,9 @@
 				        this.taskName = "";
 				        this.taskLocation = "";
 				        this.taskPrice = "";					
+			      	},
+			      	editTask: function() {
+
 			      	}			      		      	
 			    }
 			});    

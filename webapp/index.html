@@ -24,17 +24,20 @@
 	function loginUser()
 	{
 		var username = document.getElementById('userNameLogin').value;
+
 		if(localStorage[username] === undefined)
 		{
 			alert("Username not found.")
 			return;
 		}
+
 		else
 		{
 			var userObject = JSON.parse(localStorage[username]);
 			var password = document.getElementById('userPassLogin').value;
 			if(password === userObject.password)
 			{
+				localStorage.setItem('currentUser', username);
 				window.location.href="activities.html";
 			}
 			else
@@ -48,17 +51,20 @@
 	function loginProvider()
 	{
 		var username = document.getElementById('providerNameLogin').value;
+
 		if(localStorage[username] === undefined)
 		{
 			alert("Provider name not found.")
 			return;
 		}
+
 		else
 		{
 			var providerObject = JSON.parse(localStorage[username]);
 			var password = document.getElementById('providerPassLogin').value;
 			if(password === providerObject.password)
 			{
+				localStorage.setItem('currentUser', username);
 				window.location.href="activities.html";
 			}
 			else
@@ -66,15 +72,6 @@
 				alert("Password is incorrect.")
 				return;
 			}
-		}
-	}
-</script>
-<script>
-	function checkLogin()
-	{
-		if(localStorage.currentUser !== undefined)
-		{
-			userObject=JSON.parse(localStorage)[localStorage.userNameLogin];
 		}
 	}
 </script>
@@ -98,13 +95,13 @@
   <div class="column" id="providerColumn">
   	<h1>Provider Login</h1>
 	<form>
-		<input type="text" id="providerNameLogin" placeholder="Provider" /><br/>
+		<input type="text" id="providerNameLogin" placeholder="Username" /><br/>
 		<input type="password" id="providerPassLogin" placeholder="Password" />
 		<input type="reset" value="Login" onclick="loginProvider();"/>
 	</form>
   	<h1>Provider Register</h1>
 	<form>
-		<input type="text" id="providerNameRegister" placeholder="Provider" /><br/>
+		<input type="text" id="providerNameRegister" placeholder="Username" /><br/>
 		<input type="password" id="providerPassRegister" placeholder="Password" />
 		<input type="submit" value="Register" onclick="storeProvider();"/>
 	</form>
