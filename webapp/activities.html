@@ -29,17 +29,22 @@
       Add to activities
     </button>
 	<ol>
-		          <li v-for="activity in activities" v-bind:key="activity">
-		            <p class="activitiesAdded">
-		            	{{ activity.name }}
-		            	<label>| {{ activity.location }}</label>
-		            	<label>| &euro;{{ activity.price }}</label>
-	            		<button class="removeButton activeRB" v-on:click="removeTask" title="Delete Activity">Delete</button>
-		            </p> 	
-		          </li>
-		        </ol>
+		<li v-for="activity in activities" v-bind:key="activity">
+			<p class="activitiesAdded">
+				{{ activity.name }}
+		   		<label>| {{ activity.location }}</label>
+		   		<label>| &euro;{{ activity.price }}</label>
+	       		<button class="removeButton activeRB" v-on:click="removeTask" title="Delete Activity">Delete</button>
+	       		<input type="text" v-model="activity.name" :disabled="!isEditing" :class="{view: !isEditing}">
+	       		<input type="text" v-model="activity.location" :disabled="!isEditing" :class="{view: !isEditing}">
+	       		<input type="text" v-model="activity.price" :disabled="!isEditing" :class="{view: !isEditing}">
+  				<button @click="isEditing = !isEditing" v-if="!isEditing">Edit</button>
+  				<button @click="save" v-else-if="isEditing">Save</button>
+  				<button v-if="isEditing" @click="cancel">Cancel</button>
+		   </p> 	
+		</li>
+	</ol>
     <!--<pre>{{ JSON.stringify(this.activities, null, 2) }}</pre>-->
-  </div>
 </template>
 
 <div class="activities">
@@ -52,6 +57,7 @@
   template: "#example-component",
   data() {
     return {
+    	isEditing: false,
       activities: [],
       activity: {
         name: null,
@@ -59,11 +65,19 @@
         price: null
       }
     };
-	activity.name = null;
-	activity.location = null;
-	activity.price = null;
   },
   methods: {
+  	mounted() {
+  	this.cachedActivity = Object.assign({}, this.activity);
+	},
+  	save() {
+      this.cachedActivity = Object.assign({}, this.activity);
+      this.isEditing = false;
+    },
+    cancel() {
+      this.cachedActivity = Object.assign({}, this.activity);
+      this.isEditing = false;
+    },
     activitiesActivity() {
       this.activities.push({...this.activity});
     },
@@ -72,7 +86,7 @@
 		this.activityName = "";
 		this.activityLocation = "";
 		this.activityPrice = "";
-  }
+  	}
   }
 });
 
