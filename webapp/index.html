@@ -14,8 +14,16 @@
 		var regx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
 		if(regx.test(userObject.email))
 		{
-			alert("User account created, please login to access the Activity Portal");
-			localStorage[userObject.email] = JSON.stringify(userObject);
+			if(userObject.email in localStorage)
+			{
+				alert("Email already registered. Please login or use another email address.");
+				return;
+			}
+			else
+			{
+				alert("User account created, please login to access the Activity Portal");
+				localStorage[userObject.email] = JSON.stringify(userObject);
+			}
 		}
 		else
 		{
@@ -34,8 +42,17 @@
 		var regx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
 		if(regx.test(providerObject.email))
 		{
-			alert("Provider account created, please login to access the Provider Portal");
-			localStorage[providerObject.email] = JSON.stringify(providerObject);
+			if(providerObject.email in localStorage)
+			{
+				alert("Email already registered. Please login or use another email address.");
+				return;
+			}
+			else
+			{
+				alert("Provider account created, please login to access the Provider Portal");
+				localStorage[providerObject.email] = JSON.stringify(providerObject);
+			}
+			
 		}
 		else
 		{
@@ -53,25 +70,24 @@
 		if(regx.test(email))
 		{
 			if(localStorage[email] === undefined)
-		{
-			alert("Email not found.")
-			return;
-		}
-
-		else
-		{
-			var userObject = JSON.parse(localStorage[email]);
-			var password = document.getElementById('userPassLogin').value;
-			if(password === userObject.password)
 			{
-				localStorage.setItem('currentUser', email);
-				window.location.href="activities.html";
+				alert("Email not found.")
+				return;
 			}
 			else
 			{
-				alert("Password is incorrect.")
+				var userObject = JSON.parse(localStorage[email]);
+				var password = document.getElementById('userPassLogin').value;
+				if(password === userObject.password)
+				{
+					localStorage.setItem('currentUser', email);
+					window.location.href="activities.html";
+				}
+				else
+				{
+					alert("Password is incorrect.")
+				}
 			}
-		}
 		}
 		else
 		{

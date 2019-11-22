@@ -32,9 +32,9 @@
 	<ol>
 		<li v-for="activity in activities" v-bind:key="activity">
 			<p class="activitiesAdded">
-				{{ activity.name }}
-		   		<label>| {{ activity.location }}</label>
-		   		<label>| &euro;{{ activity.price }}</label>
+				Activity: {{ activity.name }}
+		   		<label>| Location:  {{ activity.location }}</label>
+		   		<label>| Price: &euro;{{ activity.price }}</label>
 	       		<button class="removeButton activeRB" v-on:click="removeTask" id="deleteBtn"title="Delete Activity">Delete</button>
 	       		<input type="text" v-model="activity.name" :disabled="!isEditing" :class="{view: !isEditing}">
 	       		<input type="text" v-model="activity.location" :disabled="!isEditing" :class="{view: !isEditing}">
@@ -45,7 +45,6 @@
 		   </p> 	
 		</li>
 	</ol>
-    <!--<pre>{{ JSON.stringify(this.activities, null, 2) }}</pre>-->
 </template>
 
 <div class="activities">
