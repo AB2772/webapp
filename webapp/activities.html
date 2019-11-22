@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="EN">
 	<head>
+		<title>Available Activities</title>
 		<link rel="stylesheet" href="styles.css"/>
 		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> 
 		<script src="https://unpkg.com/vue@1.0.28/dist/vue.js"></script>
@@ -11,7 +12,7 @@
 				window.location.href="index.html";
 			}
 		</script>
-	<head>
+	</head>
 	<body>
 		Welcome, <span id="welcomeEmail"></span>
 		<button type="button" onclick="logout();">Logout</button>
@@ -25,7 +26,7 @@
     <input v-model="activity.name" type="text" placeholder="Name">
 	<input v-model="activity.location" placeholder="Location">
 	<input v-model="activity.price" type="number" min="1" placeholder="Price">
-    <button @click="activitiesActivity">
+    <button @click="activitiesActivity" id="addBtn">
       Add to activities
     </button>
 	<ol>
@@ -34,13 +35,13 @@
 				{{ activity.name }}
 		   		<label>| {{ activity.location }}</label>
 		   		<label>| &euro;{{ activity.price }}</label>
-	       		<button class="removeButton activeRB" v-on:click="removeTask" title="Delete Activity">Delete</button>
+	       		<button class="removeButton activeRB" v-on:click="removeTask" id="deleteBtn"title="Delete Activity">Delete</button>
 	       		<input type="text" v-model="activity.name" :disabled="!isEditing" :class="{view: !isEditing}">
 	       		<input type="text" v-model="activity.location" :disabled="!isEditing" :class="{view: !isEditing}">
 	       		<input type="text" v-model="activity.price" :disabled="!isEditing" :class="{view: !isEditing}">
-  				<button @click="isEditing = !isEditing" v-if="!isEditing">Edit</button>
-  				<button @click="save" v-else-if="isEditing">Save</button>
-  				<button v-if="isEditing" @click="cancel">Cancel</button>
+  				<button @click="isEditing = !isEditing" v-if="!isEditing" id="editBtn">Edit</button>
+  				<button @click="save" v-else-if="isEditing" id="saveBtn">Save</button>
+  				<button v-if="isEditing" @click="cancel" id="cancelBtn">Cancel</button>
 		   </p> 	
 		</li>
 	</ol>

@@ -2,6 +2,30 @@ body {
 	background-color: #6d8ce8;
 }
 
+#addBtn {
+	background-color: green;
+	color: white;
+}
+
+#deleteBtn {
+	background-color: red;
+	color: white;
+}
+
+#editBtn {
+	background-color: yellow;
+	color: black;
+}
+
+#cancelBtn {
+	background-color: red;
+	color: white;
+}
+
+#saveBtn {
+	background-color: green;
+	color: white;
+}
 .column {
   float: left;
   width: 50%;
