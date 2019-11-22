@@ -1,5 +1,6 @@
+<!DOCTYPE html>
 <html>
-<head>
+<head lang="EN">
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	<title>Activities Portal Login/Register</title>
 <script>
@@ -9,6 +10,8 @@
 		var userObject = {};
 		userObject.username = document.getElementById('userNameRegister').value;
 		userObject.password = document.getElementById('userPassRegister').value;
+
+		localStorage[userObject.username] = JSON.stringify(userObject);
 	}
 </script>
 <script>
@@ -18,6 +21,8 @@
 		var providerObject = {};
 		providerObject.provider = document.getElementById('providerNameRegister').value;
 		providerObject.password = document.getElementById('providerPassRegister').value;
+
+		localStorage[providerObject.provider] = JSON.stringify(providerObject);
 	}
 </script>
 <script>
@@ -64,7 +69,6 @@
 			var password = document.getElementById('providerPassLogin').value;
 			if(password === providerObject.password)
 			{
-				localStorage.setItem('currentUser', username);
 				window.location.href="activities.html";
 			}
 			else

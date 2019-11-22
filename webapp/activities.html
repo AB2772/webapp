@@ -1,12 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="EN">
 	<head>
-		<!-- Vue references -->
-		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> <!-- Call Vue  -->
-		<!-- Vue devtools package/library fixes  -->
-		<script src="https://unpkg.com/vue@1.0.28/dist/vue.js"></script>
-		<script src="https://unpkg.com/vuex@1.0.1/dist/vuex.js"></script>
 		<link rel="stylesheet" href="styles.css"/>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> 
+		<script src="https://unpkg.com/vue@1.0.28/dist/vue.js"></script>
 		<script>
 			function logout()
 			{
@@ -14,95 +11,78 @@
 				window.location.href="index.html";
 			}
 		</script>
-		<script>
-			function storeActivity()
-			{
-				var activityObject = {};
-				activityObject.activity = document.getElementById('new-task').value;
-				activityObject.location = document.getElementById('new-location').value;
-				activityObject.price = document.getElementById('new-price').value;
-			}
-		</script>
 	<head>
-
 	<body>
-		Welcome, <span id="welcomeName"></span>
+		Welcome, <span id="welcomeEmail"></span>
+		<button type="button" onclick="logout();">Logout</button>
 	<script>
-		document.getElementById("welcomeName").innerHTML=localStorage.getItem("currentUser");
+		document.getElementById("welcomeEmail").innerHTML=localStorage.getItem("currentUser");
 	</script>
-		<!-- parent div containing all to-do list div -->
-		<div id="activityList">
-			<!-- div to add a new task -->			
-			<div id="addNewTask">
-        		<!-- add task form -->        		
-		        <form v-on:submit.prevent=""> <!-- ' v-on:submit.prevent="" ' prevents the page from reloading once a new task is added -->
-			          <label class="inputlabel" for="new-task">Activity Details: </label> 
-			          <!-- 'label' for the input field -->		       
-			          <input type="text" id="new-task" v-model="newTask" placeholder="Add Activity" autofocus="" />
-			          <input type="text" id="new-location" v-model="newLocation" placeholder="Add Location" autofocus="" />
-			          <input type="text" id="new-price" v-model="newPrice" placeholder="Add Price" autofocus="" />			
-			    	  <a v-if="newTask != null">
-						<button class="addButton activeAB" v-on:click="addTask" title="Activity" onclick="storeActivity()" type="reset">Add Activity!</button>
-			          </a>
-			          <a v-else>  <!-- 'Else' deactivate 'Add Task' button if the placeholder is empty -->
-			          	 <button class="addButton" type="button" disabled="">Add Activity!</button>			          			          	 		       	 
-			          </a>
-		          	<hr/>
-		          	<h1 class="maintitle">Activities Available:</h1>			          		      
-		        </form>	        	
-		    </div>
-		    <button type="button" onclick="logout();">Logout</button>
-
-		    <!-- div to add the new 'task' to the 'tasks' array -->	
-		    	<!-- 'tasks' ordered list -->		        
-		        <ol>
-		          <li v-for="task in tasks" v-bind:key="task"> <!-- for each 'task' bind it to the 'tasks' array -->
-		            <p class="tasksAdded">
-		            	{{ task.taskName }}
-		            	<label>| {{ task.taskLocation }}</label>
-		            	<label>| &euro;{{ task.taskPrice }}</label> <!-- retrieve the task name from the "tasks" array & output it in a fresh line -->
-	            		<button class="removeButton activeRB" v-on:click="removeTask" title="Remove Task">Delete</button>  <!-- Delete button if user wants to remove/delete task | | removeTask calls corresponding method -->           	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.4/vue.min.js"></script>
+<template id="example-component">
+  <div>
+    <h1>There are {{ this.activities.length }} activities available.</h1>
+    <input v-model="activity.name" type="text" placeholder="Name">
+	<input v-model="activity.location" placeholder="Location">
+	<input v-model="activity.price" type="number" min="1" placeholder="Price">
+    <button @click="activitiesActivity">
+      Add to activities
+    </button>
+	<ol>
+		          <li v-for="activity in activities" v-bind:key="activity">
+		            <p class="activitiesAdded">
+		            	{{ activity.name }}
+		            	<label>| {{ activity.location }}</label>
+		            	<label>| &euro;{{ activity.price }}</label>
+	            		<button class="removeButton activeRB" v-on:click="removeTask" title="Delete Activity">Delete</button>
 		            </p> 	
 		          </li>
 		        </ol>
-	    	</div>
-	    </div>	
+    <!--<pre>{{ JSON.stringify(this.activities, null, 2) }}</pre>-->
+  </div>
+</template>
 
-		<script>
-		  	new Vue ({
-			    el: '#activityList',
-			    data: function(){
-			      return {
-			        tasks: []
-			      };
+<div class="activities">
+  <example-component></example-component>
+</div>
 
-			    },
-			    methods: {
-			    	// "addTask" method			    	
-			     	addTask: function() {			     		
-				        this.tasks.push({ //push new elements into the "tasks" array
-				          //add next task
-				          id: this.nextId++, //increment automatically the task id number by 1
-				          taskName: this.newTask, //add the new to task to the list
-				          taskLocation: this.newLocation,
-				          taskPrice: this.newPrice
-				        });
-				        this.newTask = null; // placeholder value is nullified/cleared
-				        this.newLocation = null;
-				        this.newPrice = null;
-			      	},
-			     	removeTask: function(index) {			     		
-				          //add next task
-				        this.tasks.splice(index, 1); //'splice' is used to remove the respective "task" element from "tasks"
-				        this.taskName = "";
-				        this.taskLocation = "";
-				        this.taskPrice = "";					
-			      	},
-			      	editTask: function() {
+<script>
+  const exampleComponent = Vue.component("example-component", {
+  name: "exampleComponent",
+  template: "#example-component",
+  data() {
+    return {
+      activities: [],
+      activity: {
+        name: null,
+        location: null,
+        price: null
+      }
+    };
+	activity.name = null;
+	activity.location = null;
+	activity.price = null;
+  },
+  methods: {
+    activitiesActivity() {
+      this.activities.push({...this.activity});
+    },
+	removeTask: function(index) {			     		
+		this.activities.splice(index, 1); 
+		this.activityName = "";
+		this.activityLocation = "";
+		this.activityPrice = "";
+  }
+  }
+});
 
-			      	}			      		      	
-			    }
-			});    
-		</script>
-	</body>
+const page = new Vue({
+  name: "activities page",
+  el: ".activities",
+  components: {
+    "example-component": exampleComponent
+  }
+});
+</script>
+</body>
 </html>
