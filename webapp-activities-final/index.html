@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head lang="EN">
+	<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<title>Activities Portal Login/Register</title>
+<script>
+	function storeUser()
+	{
+		
+		var userObject = {};
+		userObject.email = document.getElementById('userNameRegister').value;
+		userObject.password = document.getElementById('userPassRegister').value;
+
+		var regx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
+		if(regx.test(userObject.email))
+		{
+			if(userObject.email in localStorage)
+			{
+				alert("Email already registered. Please login or use another email address.");
+				return;
+			}
+			else
+			{
+				alert("User account created, please login to access the Activity Portal");
+				localStorage[userObject.email] = JSON.stringify(userObject);
+			}
+		}
+		else
+		{
+			alert("Please enter a valid email address.");
+			return;
+		}
+	}
+</script>
+<script>
+	function storeProvider()
+	{
+		var providerObject = {};
+		providerObject.email = document.getElementById('providerNameRegister').value;
+		providerObject.password = document.getElementById('providerPassRegister').value;
+
+		var regx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
+		if(regx.test(providerObject.email))
+		{
+			if(providerObject.email in localStorage)
+			{
+				alert("Email already registered. Please login or use another email address.");
+				return;
+			}
+			else
+			{
+				alert("Provider account created, please login to access the Provider Portal");
+				localStorage[providerObject.email] = JSON.stringify(providerObject);
+			}
+			
+		}
+		else
+		{
+			alert("Please enter a valid email address.");
+			return;
+		}
+	}
+</script>
+<script>
+	function loginUser()
+	{
+		var email = document.getElementById('userNameLogin').value;
+
+		var regx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
+		if(regx.test(email))
+		{
+			if(localStorage[email] === undefined)
+			{
+				alert("Email not found.");
+				return;
+			}
+			else
+			{
+				var userObject = JSON.parse(localStorage[email]);
+				var password = document.getElementById('userPassLogin').value;
+				if(password === userObject.password)
+				{
+					localStorage.setItem('currentUser', email);
+					window.location.href="activities.html";
+				}
+				else
+				{
+					alert("Password is incorrect.");
+				}
+			}
+		}
+		else
+		{
+			alert("Please enter a valid email address.");
+			return;
+		}
+	}
+</script>
+<script>
+	function loginProvider()
+	{
+		var email = document.getElementById('providerNameLogin').value;
+
+		var regx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
+		if(regx.test(email))
+		{
+			if(localStorage[email] === undefined)
+		{
+			alert("Email not found.")
+			return;
+		}
+		else
+		{
+			var providerObject = JSON.parse(localStorage[email]);
+			var password = document.getElementById('providerPassLogin').value;
+			if(password === providerObject.password)
+			{
+				localStorage.setItem('currentUser', email);
+				window.location.href="activities.html";
+			}
+			else
+			{
+				alert("Password is incorrect.");
+			}
+			}
+		}
+		else
+		{
+			alert("Please enter a valid email address.");
+			return;
+		}
+	}
+</script>
+</head>
+<body>
+<div class="row">
+  <div class="column" id="userColumn">
+  	<h1>User Login</h1>
+	<form>
+		<input type="email" id="userNameLogin" placeholder="Email" /><br/>
+		<input type="password" id="userPassLogin" placeholder="Password" />
+		<input type="reset" value="Login" onclick="loginUser();"/>
+	</form>
+  	<h1>User Register</h1>
+	<form>
+		<input type="email" id="userNameRegister" placeholder="Email" /><br/>
+		<input type="password" id="userPassRegister" placeholder="Password" />
+		<input type="submit" value="Register" onclick="storeUser();"/>
+	</form>
+  </div>
+  <div class="column" id="providerColumn">
+  	<h1>Provider Login</h1>
+	<form>
+		<input type="email" id="providerNameLogin" placeholder="Email" /><br/>
+		<input type="password" id="providerPassLogin" placeholder="Password" />
+		<input type="reset" value="Login" onclick="loginProvider();"/>
+	</form>
+  	<h1>Provider Register</h1>
+	<form>
+		<input type="email" id="providerNameRegister" placeholder="Email" /><br/>
+		<input type="password" id="providerPassRegister" placeholder="Password" />
+		<input type="submit" value="Register" onclick="storeProvider();"/>
+	</form>
+  </div>
+</div>
+</body>
+</html>

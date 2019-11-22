@@ -1,0 +1,40 @@
+body {
+	background-color: #6d8ce8;
+	font-family: 'Roboto', sans-serif;
+}
+
+#addBtn {
+	background-color: green;
+	color: white;
+}
+
+#deleteBtn {
+	background-color: red;
+	color: white;
+}
+
+#editBtn {
+	background-color: yellow;
+	color: black;
+}
+
+#cancelBtn {
+	background-color: red;
+	color: white;
+}
+
+#saveBtn {
+	background-color: green;
+	color: white;
+}
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

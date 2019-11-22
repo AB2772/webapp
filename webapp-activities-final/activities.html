@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="EN">
+	<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+		<title>Available Activities</title>
+		<link rel="stylesheet" href="styles.css"/>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> 
+		<script src="https://unpkg.com/vue@1.0.28/dist/vue.js"></script>
+		<script>
+			function logout()
+			{
+				localStorage.removeItem('currentUser');
+				window.location.href="index.html";
+			}
+		</script>
+	</head>
+	<body>
+		Welcome, <span id="welcomeEmail"></span>
+		<button type="button" onclick="logout();">Logout</button>
+	<script>
+		document.getElementById("welcomeEmail").innerHTML=localStorage.getItem("currentUser");
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.4/vue.min.js"></script>
+<template id="example-component">
+  <div>
+    <h1>There are {{ this.activities.length }} activities available.</h1>
+    <input v-model="activity.name" type="text" placeholder="Name">
+	<input v-model="activity.location" placeholder="Location">
+	<input v-model="activity.price" type="number" min="1" placeholder="Price">
+    <button @click="activitiesActivity" id="addBtn">
+      Add to activities
+    </button>
+	<ol>
+		<li v-for="activity in activities" v-bind:key="activity">
+			<p class="activitiesAdded">
+				Activity: {{ activity.name }}
+		   		<label>| Location:  {{ activity.location }}</label>
+		   		<label>| Price: &euro;{{ activity.price }}</label>
+	       		<button class="removeButton activeRB" v-on:click="removeTask" id="deleteBtn"title="Delete Activity">Delete</button>
+	       		<input type="text" v-model="activity.name" :disabled="!isEditing" :class="{view: !isEditing}">
+	       		<input type="text" v-model="activity.location" :disabled="!isEditing" :class="{view: !isEditing}">
+	       		<input type="text" v-model="activity.price" :disabled="!isEditing" :class="{view: !isEditing}">
+  				<button @click="isEditing = !isEditing" v-if="!isEditing" id="editBtn">Edit</button>
+  				<button @click="save" v-else-if="isEditing" id="saveBtn">Save</button>
+  				<button v-if="isEditing" @click="cancel" id="cancelBtn">Cancel</button>
+		   </p> 	
+		</li>
+	</ol>
+</template>
+
+<div class="activities">
+  <example-component></example-component>
+</div>
+
+<script>
+  const exampleComponent = Vue.component("example-component", {
+  name: "exampleComponent",
+  template: "#example-component",
+  data() {
+    return {
+    	isEditing: false,
+      activities: [],
+      activity: {
+        name: null,
+        location: null,
+        price: null
+      }
+    };
+  },
+  methods: {
+  	mounted() {
+  	this.cachedActivity = Object.assign({}, this.activity);
+	},
+  	save() {
+      this.cachedActivity = Object.assign({}, this.activity);
+      this.isEditing = false;
+    },
+    cancel() {
+      this.cachedActivity = Object.assign({}, this.activity);
+      this.isEditing = false;
+    },
+    activitiesActivity() {
+      this.activities.push({...this.activity});
+    },
+	removeTask: function(index) {			     		
+		this.activities.splice(index, 1); 
+		this.activityName = "";
+		this.activityLocation = "";
+		this.activityPrice = "";
+  	}
+  }
+});
+
+const page = new Vue({
+  name: "activities page",
+  el: ".activities",
+  components: {
+    "example-component": exampleComponent
+  }
+});
+</script>
+</body>
+</html>
